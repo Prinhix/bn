@@ -88,7 +88,7 @@
 </head>
 <body>
   <div class="top-right">
-    <a href="tvbn.com/dangki" class="link-btn">Đăng kí</a>
+    <a href="prinhix.github.io/bn/dk" class="link-btn">Đăng kí</a>
     <span class="toggle" id="themeToggle">Dark</span>
   </div>
 
@@ -138,7 +138,8 @@
 
     form.addEventListener("submit", e => {
       e.preventDefault();
-      if (username.value === "admin" && password.value === "123") {
+      let users = JSON.parse(localStorage.getItem("users")) || {};
+if (users[username.value] && users[username.value] === password.value) {
         localStorage.setItem("loggedIn", "true");
         window.location.href = "tvbn.com";
       } else {
