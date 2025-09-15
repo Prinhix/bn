@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #000;
+      text-align: center;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark-mode {
+      background: #121212;
+      color: #fff;
+    }
+    .container {
+      margin-top: 100px;
+    }
+    h1 {
+      font-size: 32px;
+      color: #3b82f6;
+    }
+    label {
+      font-size: 14px;
+      display: inline-block;
+      width: 120px;
+      text-align: right;
+      margin-right: 8px;
+    }
+    input {
+      padding: 5px;
+      width: 200px;
+      border: 2px solid #3b82f6;
+      border-radius: 4px;
+      outline: none;
+    }
+    body.dark-mode input {
+      border: 2px solid #fff;
+      background: #333;
+      color: #fff;
+    }
+    .btn {
+      margin-top: 15px;
+      padding: 6px 16px;
+      border: 2px solid #22c55e;
+      background: #22c55e;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    body.dark-mode .btn {
+      border: 2px solid #22c55e;
+      background: #22c55e;
+      color: #000;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    .top-right {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .toggle {
+      cursor: pointer;
+      margin-left: 15px;
+      font-weight: bold;
+    }
+    .link-btn {
+      padding: 6px 16px;
+      border: 2px solid #22c55e;
+      background: #22c55e;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    body.dark-mode .toggle {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-right">
+    <a href="tvbn.com/dangki" class="link-btn">Đăng kí</a>
+    <span class="toggle" id="themeToggle">Dark</span>
+  </div>
+
+  <div class="container">
+    <h1>Đăng nhập</h1>
+    <form id="loginForm">
+      <div>
+        <label for="username">Tên đăng nhập:</label>
+        <input type="text" id="username" autocomplete="off">
+      </div>
+      <br>
+      <div>
+        <label for="password">Mật khẩu:</label>
+        <input type="password" id="password">
+      </div>
+      <div class="error" id="errorMsg"></div>
+      <button type="submit" class="btn">Đăng nhập</button>
+    </form>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById("themeToggle");
+    const body = document.body;
+    toggleBtn.addEventListener("click", () => {
+      body.classList.toggle("dark-mode");
+      toggleBtn.textContent = body.classList.contains("dark-mode") ? "Light" : "Dark";
+    });
+
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    // Enter để chuyển xuống ô mật khẩu và submit
+    username.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        password.focus();
+      }
+    });
+    password.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        form.requestSubmit();
+      }
+    });
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      if (username.value === "admin" && password.value === "123") {
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = "tvbn.com";
+      } else {
+        errorMsg.textContent = "Sai tên đăng nhập hoặc mật khẩu";
+      }
+    });
+
+    // Kiểm tra trạng thái đăng nhập
+    if (!window.location.href.includes("tvbn.com/dn") && !window.location.href.includes("tvbn.com/dangki")) {
+      if (!localStorage.getItem("loggedIn")) {
+        window.location.href = "tvbn.com/dn";
+      }
+    }
+  </script>
+</body>
+</html>
